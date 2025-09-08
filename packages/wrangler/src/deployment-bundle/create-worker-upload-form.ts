@@ -67,6 +67,7 @@ export type WorkerMetadataBinding =
 	| { type: "version_metadata"; name: string }
 	| { type: "data_blob"; name: string; part: string }
 	| { type: "kv_namespace"; name: string; namespace_id: string; raw?: boolean }
+	| { type: "media"; name: string }
 	| {
 			type: "send_email";
 			name: string;

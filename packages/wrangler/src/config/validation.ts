@@ -2363,6 +2363,7 @@ const validateUnsafeBinding: ValidatorFn = (diagnostics, field, value) => {
 			"logfwdr",
 			"mtls_certificate",
 			"pipeline",
+			"media",
 		];
 
 		if (safeBindings.includes(value.type)) {

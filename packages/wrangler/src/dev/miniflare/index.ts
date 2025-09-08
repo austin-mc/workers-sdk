@@ -424,6 +424,7 @@ type WorkerOptionsBindings = Pick<
 	| "mtlsCertificates"
 	| "helloWorld"
 	| "workerLoaders"
+	| "media"
 >;
 
 type MiniflareBindingsConfig = Pick<
@@ -538,6 +539,10 @@ export function buildMiniflareBindingOptions(
 
 	if (bindings.browser && remoteBindingsEnabled) {
 		warnOrError("browser", bindings.browser.experimental_remote, "remote");
+	}
+
+	if (bindings.media && remoteBindingsEnabled) {
+		warnOrError("media", bindings.media.experimental_remote, "always-remote");
 	}
 
 	if (bindings.mtls_certificates && remoteBindingsEnabled) {
@@ -707,6 +712,13 @@ export function buildMiniflareBindingOptions(
 							bindings.images.experimental_remote && remoteProxyConnectionString
 								? remoteProxyConnectionString
 								: undefined,
+					}
+				: undefined,
+		media:
+			bindings.media && remoteProxyConnectionString
+				? {
+						binding: bindings.media.binding,
+						remoteProxyConnectionString,
 					}
 				: undefined,
 		browserRendering: bindings.browser?.binding
