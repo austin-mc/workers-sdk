@@ -20,3 +20,8 @@ test("ratelimit support", async () => {
 	const response = await getTextResponse("/rate-limit");
 	expect(response).toBe("Rate limit binding works: first: true, second: false");
 });
+
+test("media support", async () => {
+	const response = await getTextResponse("/media");
+	expect(response).toBe("Media binding works");
+});

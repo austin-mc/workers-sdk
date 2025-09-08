@@ -55,6 +55,17 @@ export default {
 					status: 200,
 				});
 			}
+			case "/media": {
+				if (env.MEDIA === undefined) {
+					return new Response("env.MEDIA is undefined", {
+						status: 500,
+					});
+				}
+
+				return new Response("Media binding works", {
+					status: 200,
+				});
+			}
 		}
 
 		return new Response("Please specify a binding you want to test", {

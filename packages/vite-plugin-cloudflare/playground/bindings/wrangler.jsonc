@@ -20,6 +20,9 @@
 			"binding": "WAE",
 		},
 	],
+	"media": {
+		"binding": "MEDIA",
+	},
 	"unsafe": {
 		"bindings": [
 			{

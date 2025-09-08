@@ -196,3 +196,4 @@ export * from "./vectorize";
 export * from "./mtls";
 export * from "./hello-world";
 export * from "./worker-loader";
+export * from "./media";

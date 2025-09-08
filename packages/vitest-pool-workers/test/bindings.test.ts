@@ -58,3 +58,55 @@ test("hello_world support", async ({ expect, seed, vitestRun }) => {
 	const result = await vitestRun();
 	await expect(result.exitCode).resolves.toBe(0);
 });
+
+test("Media binding support", async ({ expect, seed, vitestRun }) => {
+	await seed({
+		"vitest.config.mts": dedent`
+			import { defineWorkersConfig } from "@cloudflare/vitest-pool-workers/config";
+			export default defineWorkersConfig({
+				test: {
+					poolOptions: {
+						workers: {
+							singleWorker: true,
+							wrangler: { configPath: "./wrangler.jsonc" },
+						},
+					},
+				}
+			});
+		`,
+		"wrangler.jsonc": dedent`
+			{
+				"compatibility_date": "2025-01-01",
+				"media": {
+					"binding": "MEDIA",
+				}
+			}
+		`,
+		"index.ts": dedent`
+			export default {
+				async fetch(request, env, ctx) {
+					if (env.MEDIA === undefined) {
+						return new Response("env.MEDIA is undefined");
+					}
+
+					return new Response("env.MEDIA is available");
+				}
+			}
+		`,
+		"index.test.ts": dedent`
+			import { env, createExecutionContext, waitOnExecutionContext } from "cloudflare:test";
+			import { it, expect } from "vitest";
+			import worker from "./index";
+			it("works", async () => {
+				const request = new Request("http://example.com");
+				const ctx = createExecutionContext();
+				const response = await worker.fetch(request, env, ctx);
+				await waitOnExecutionContext(ctx);
+				expect(await response.text()).toBe("env.MEDIA is available");
+			});
+		`,
+	});
+
+	const result = await vitestRun();
+	await expect(result.exitCode).resolves.toBe(0);
+});
