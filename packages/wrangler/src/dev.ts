@@ -482,6 +482,7 @@ async function setupDevEnv(
 					logfwdr: undefined,
 					unsafe: undefined,
 					assets: undefined,
+					media: undefined,
 				}),
 			},
 			dev: {
@@ -1002,6 +1003,7 @@ export function getBindings(
 			: undefined,
 		unsafe_hello_world: configParam.unsafe_hello_world,
 		ratelimits: configParam.ratelimits,
+		media: configParam.media,
 	};
 
 	return bindings;
